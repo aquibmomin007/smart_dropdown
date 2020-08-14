@@ -1,1 +1,1 @@
-export {}
+export const baseUrl = 'https://mock-api.com'
