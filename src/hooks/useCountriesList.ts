@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "../mocks/axios";
 import { baseUrl } from "../constants";
 
-type SelectOption = {
+export type CountryOption = {
     value: string
     label: string
 }
 
-export const useCountriesList = () => {
-    const [countries, setCountries] = useState<SelectOption[]>([]);
+export const useCountriesList = (term: string) => {
+    const [countries, setCountries] = useState<CountryOption[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
    
@@ -18,8 +18,8 @@ export const useCountriesList = () => {
         setIsLoading(true);
    
         try {
-          const result = await axios.get(baseUrl + "/countries");
-          setCountries(result.data);
+          const result = await axios.get(baseUrl + "/countries", { params: { term } })
+          setCountries(result.data)
         } catch (error) {
           setError(error);
         }
@@ -28,7 +28,7 @@ export const useCountriesList = () => {
       };
    
       fetchData();
-    }, []);
+    }, [term]);
    
     return { countries, isLoading, error };
 }

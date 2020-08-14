@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="main-container">
-        <DropDown />
+        <DropDown maxOptionsToShow={5} />
       </div>
     </div>
   );
