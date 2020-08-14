@@ -1,11 +1,13 @@
 import React from 'react';
+import './App';
+import DropDown from './components/DropDown/DropDown';
 
 const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-      <p>Hello Boilerplate</p>
-      </header>
+      <div className="main-container">
+        <DropDown />
+      </div>
     </div>
   );
 }
