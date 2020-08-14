@@ -1,26 +1,30 @@
-import React from 'react';
-import './DropDown.scss';
+import React, { useState, useCallback } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
+import styles from './DropDown.module.scss'
 
-const DropDown = () => {
+const DropDown = () => { 
+  const [showOptions, setShowOptions] = useState(false);
+  const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
-    return (
-        <>  
-            <div className="dropdown-wrapper">
-                <div className="dropdown-header">
-                    <p className="dropdown-placeholder">Select a location</p>
-                </div>
-                <ul className="dropdown-list-container">
-                    <li className="dropdown-list-item">Singapore</li>
-                    <li className="dropdown-list-item">Malaysia</li>
-                    <li className="dropdown-list-item">Indonesia</li> 
-                    <li className="dropdown-list-item">Philippines</li> 
-                    <li className="dropdown-list-item">Thailand</li> 
-                    <li className="dropdown-list-item">Japan</li> 
-                    <li className="dropdown-list-item">Australia</li>
-                </ul>
-            </div>
-        </>
-    )
+  return (
+    <div className={styles.dropdownWrapper}>
+      <div className={styles.dropdownHeader} onClick={toggleExpand}>
+          <span className={styles.dropdownPlaceholder}>Select a location</span>
+          <FaChevronDown className={styles.chevron} />
+      </div>
+      {showOptions && (
+        <ul className={styles.dropdownListContainer}>
+          <li className={styles.dropdownListItem}>Singapore</li>
+          <li className={styles.dropdownListItem}>Malaysia</li>
+          <li className={styles.dropdownListItem}>Indonesia</li> 
+          <li className={styles.dropdownListItem}>Philippines</li> 
+          <li className={styles.dropdownListItem}>Thailand</li> 
+          <li className={styles.dropdownListItem}>Japan</li> 
+          <li className={styles.dropdownListItem}>Australia</li>
+        </ul>
+      )}
+    </div>
+  )
 }
 
 export default DropDown;
