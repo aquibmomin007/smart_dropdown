@@ -1,15 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import cx from 'classnames';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styles from './DropDown.module.scss'
 import { useCountriesList, CountryOption } from '../../hooks/useCountriesList';
 import { getMoreLinkHelper } from '../../helpers/getMoreLinkHelper';
+import MoreLink from '../MoreLink/MoreLink';
+import ListItem from '../ListItem/ListItem';
+import SearchBlock from '../SearchBlock/SearchBlock';
+import DropDownHeader from '../DropDownHeader/DropDownHeader';
 
 type DropDownProps = {
   maxOptionsToShow: number
+  hasAddPermission: boolean
 }
 
-const DropDown = ({ maxOptionsToShow }: DropDownProps) => { 
+const DropDown = ({ maxOptionsToShow, hasAddPermission }: DropDownProps) => { 
   const [showOptions, setShowOptions] = useState(false);
   const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
@@ -43,46 +46,52 @@ const DropDown = ({ maxOptionsToShow }: DropDownProps) => {
     return (searchTerm.length > 0) && (countries.length < 1)
   }, [searchTerm, countries]);
 
+
+  //clickoutside function
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowOptions(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [ref]);
+
   return (
-    <div className={styles.dropdownWrapper}>
-      <div className={styles.dropdownHeader} onClick={toggleExpand}>
-          {selectedOption ?
-            <span className={styles.selectedOption}>{selectedOption.label}</span> :
-            <span className={styles.dropdownPlaceholder}>Select a location</span>
-          }
-          {showOptions ? (
-            <FaChevronUp className={styles.chevron} />
-          ):(
-            <FaChevronDown className={styles.chevron} />
-          )}
-      </div>
+    <div ref={ref} className={styles.dropdownWrapper}>
+      <DropDownHeader 
+        showOptions={showOptions}
+        selectedOption={selectedOption}
+        toggleExpand={toggleExpand}
+      />
       {showOptions && (
         <div className={styles.dropdownListWrapper}>
-          <input type="text" value={searchTerm} className={styles.dropdownSearchInput} placeholder="Search..." onChange={handleSearchChange} />
-          {showSearchAddBlock() && (
-            <div className={styles.searchBlock}>
-              <p className={styles.searchBlockText}>{`"${searchTerm}" not found`}</p>
-              <button className={styles.searchBlockBtn} onClick={handleAddNewOption}>Add &amp; Select</button>
-            </div>
-          )}
+          <SearchBlock 
+            searchTerm={searchTerm}
+            hasAddPermission={hasAddPermission}
+            handleAddNewOption={handleAddNewOption}
+            handleSearchChange={handleSearchChange}
+            showSearchAddBlock={showSearchAddBlock}
+          />
           <ul className={styles.dropdownListContainer}>
             {countries
               .slice(0, maxValues)
               .map(
                 (country, i) =>
-                  <li
+                  <ListItem 
                     key={i}
-                    className={cx(styles.dropdownListItem, {
-                      [styles.activeListItem]: selectedOption && selectedOption.value === country.value
-                    })}
-                    onClick={handleSelectChange(country)}>
-                      {country.label}
-                  </li>
+                    country={country}
+                    selectedOption={selectedOption}
+                    handleSelectChange={() => handleSelectChange(country)}
+                  />
               )
             }
           </ul>
           {getMoreLinkHelper(countries.length, maxValues) > 0 && (
-            <p className={styles.dropdownMoreList} onClick={handleSetAllCountries}>{`${getMoreLinkHelper(countries.length, maxValues)} more...`}</p>
+            <MoreLink moreValue={getMoreLinkHelper(countries.length, maxValues)} handleSetAllCountries={handleSetAllCountries}/>
           )}
         </div>
       )}

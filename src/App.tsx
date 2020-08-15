@@ -6,7 +6,16 @@ const App = () => {
   return (
     <div className={styles.root}>
       <div className={styles.mainContainer}>
-        <DropDown maxOptionsToShow={12} />
+        <DropDown 
+          maxOptionsToShow={5}
+          hasAddPermission={true}
+        />
+      </div>
+      <div className={styles.mainContainer}>
+        <DropDown 
+          maxOptionsToShow={5}
+          hasAddPermission={false}
+        />
       </div>
     </div>
   );

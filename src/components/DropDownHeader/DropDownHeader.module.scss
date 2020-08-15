@@ -1,0 +1,23 @@
+.dropdownHeader {
+    cursor: pointer;
+    height: 40px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    padding: 10px 40px 10px 15px;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+}
+
+.dropdownPlaceholder {
+    opacity: 0.4;
+}
+
+.chevron {
+    margin-left: 10px;
+    position: absolute;
+    right: 0;
+    top: 1px;
+    background: white;
+    padding: 10px;
+}

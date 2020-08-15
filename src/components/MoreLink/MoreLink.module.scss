@@ -1,0 +1,11 @@
+.dropdownMoreList{
+    cursor: pointer;
+    text-align: right;
+    color: blue;
+    font-size: 12px;
+    margin: 5px 10px;
+
+    &:hover{
+        text-decoration: underline;
+    }
+}

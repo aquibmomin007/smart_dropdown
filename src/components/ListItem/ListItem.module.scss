@@ -1,0 +1,14 @@
+.dropdownListItem {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    word-break: break-word;
+
+    &:hover{
+        background: #cccccc4d
+    }
+}
+
+.activeListItem {
+    background: #d8d8d8;
+}
