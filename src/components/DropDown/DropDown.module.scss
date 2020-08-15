@@ -4,10 +4,12 @@
 
 .dropdownHeader {
     cursor: pointer;
-    height: 50px;
+    height: 40px;
     border: 1px solid #000000;
     box-sizing: border-box;
-    padding: 15px;
+    padding: 10px 40px 10px 15px;
+    position: relative;
+    text-align: left;
 }
 
 .dropdownPlaceholder {
@@ -49,6 +51,8 @@
 
 .chevron {
     margin-left: 10px;
+    position: absolute;
+    right: 15px;
 }
 
 .searchBlock{
@@ -60,7 +64,7 @@
 }
 
 .searchBlockText{
-    margin: 0;
+    margin: 0 0 10px;
 }
 
 .dropdownMoreList{

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import styles from './DropDown.module.scss'
 import { useCountriesList, CountryOption } from '../../hooks/useCountriesList';
 import { getMoreLinkHelper } from '../../helpers/getMoreLinkHelper';
@@ -25,9 +25,12 @@ const DropDown = ({ maxOptionsToShow }: DropDownProps) => {
   
   const { countries } = useCountriesList(searchTerm)
   const handleSetAllCountries = useCallback(() => {
-    console.log(countries.length)
     setMaxValues(countries.length)
   }, [setMaxValues, countries]);
+
+  const showSearchAddBlock = useCallback(() => {
+    return (searchTerm.length > 0) && (countries.length < 1)
+  }, [searchTerm, countries]);
 
   
 
@@ -38,12 +41,17 @@ const DropDown = ({ maxOptionsToShow }: DropDownProps) => {
             <span className={styles.selectedOption}>{selectedOption.label}</span> :
             <span className={styles.dropdownPlaceholder}>Select a location</span>
           }
-          <FaChevronDown className={styles.chevron} />
+          
+          {showOptions ? (
+            <FaChevronUp className={styles.chevron} />
+          ):(
+            <FaChevronDown className={styles.chevron} />
+          )}
       </div>
       {showOptions && (
         <div className={styles.dropdownListWrapper}>
           <input type="text" className={styles.dropdownSearchInput} onChange={handleSearchChange} />
-          {(searchTerm.length > 0) && (countries.length < 1) && (
+          {showSearchAddBlock() && (
             <div className={styles.searchBlock}>
               <p className={styles.searchBlockText}>{`"${searchTerm}" not found`}</p>
               <button className={styles.searchBlockBtn}>Add &amp; Select</button>
