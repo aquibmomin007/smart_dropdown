@@ -50,7 +50,7 @@ const DropDown = ({ maxOptionsToShow }: DropDownProps) => {
       </div>
       {showOptions && (
         <div className={styles.dropdownListWrapper}>
-          <input type="text" className={styles.dropdownSearchInput} onChange={handleSearchChange} />
+          <input type="text" className={styles.dropdownSearchInput} placeholder="Search..." onChange={handleSearchChange} />
           {showSearchAddBlock() && (
             <div className={styles.searchBlock}>
               <p className={styles.searchBlockText}>{`"${searchTerm}" not found`}</p>
