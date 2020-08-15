@@ -1,5 +1,5 @@
 .dropdownWrapper {
-    max-width: 200px;
+    max-width: 250px;
 }
 
 .dropdownHeader {
@@ -28,6 +28,7 @@
     margin: 15px 0 10px;
     padding: 6px;
     line-height: 18px;
+    width: calc(100% - 35px);
 }
 
 .dropdownListItem {
@@ -40,6 +41,36 @@
     }
 }
 
+.searchBlockBtn{
+    line-height: 18px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
 .chevron {
     margin-left: 10px;
+}
+
+.searchBlock{
+    display: flex;
+    flex-flow: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.searchBlockText{
+    margin: 0;
+}
+
+.dropdownMoreList{
+    cursor: pointer;
+    text-align: right;
+    color: blue;
+    font-size: 12px;
+    margin: 5px 10px;
+
+    &:hover{
+        text-decoration: underline;
+    }
 }

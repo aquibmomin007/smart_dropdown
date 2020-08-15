@@ -28,6 +28,9 @@ const countriesList = [{
 }, {
     value: 'CN',
     label: 'Republic of China',
+}, {
+    value: 'IT',
+    label: 'Italy',
 }]
 
 export default {
