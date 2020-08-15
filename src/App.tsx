@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.scss';
+import styles from './App.module.scss';
 import DropDown from './components/DropDown/DropDown';
 
 const App = () => {
   return (
-    <div className="App">
-      <div className="main-container">
-        <DropDown maxOptionsToShow={5} />
+    <div className={styles.root}>
+      <div className={styles.mainContainer}>
+        <DropDown maxOptionsToShow={12} />
       </div>
     </div>
   );

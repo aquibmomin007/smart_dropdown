@@ -10,6 +10,7 @@
     padding: 10px 40px 10px 15px;
     position: relative;
     text-align: left;
+    overflow: hidden;
 }
 
 .dropdownPlaceholder {
@@ -20,6 +21,8 @@
     list-style-type: none;
     padding: 0;   
     margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 .dropdownListWrapper {
     border: 1px solid #ccc;
@@ -37,10 +40,15 @@
     padding: 5px 10px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+    word-break: break-word;
 
     &:hover{
         background: #cccccc4d
     }
+}
+
+.activeListItem {
+    background: #d8d8d8;
 }
 
 .searchBlockBtn{
@@ -48,12 +56,16 @@
     padding: 5px;
     box-sizing: border-box;
     cursor: pointer;
+    min-width: 100px;
 }
 
 .chevron {
     margin-left: 10px;
     position: absolute;
-    right: 15px;
+    right: 0;
+    top: 1px;
+    background: white;
+    padding: 10px;
 }
 
 .searchBlock{
@@ -69,6 +81,9 @@
     font-style: italic;
     font-size: 13px;
     color: #525050;
+    word-break: break-word;
+    padding: 0 10px 0 0;
+    box-sizing: border-box;
 }
 
 .dropdownMoreList{

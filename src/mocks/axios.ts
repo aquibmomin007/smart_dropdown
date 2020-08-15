@@ -1,4 +1,4 @@
-const countriesList = [{
+let countriesList = [{
     value: 'SG',
     label: 'Singapore',
 }, {
@@ -31,18 +31,40 @@ const countriesList = [{
 }, {
     value: 'IT',
     label: 'Italy',
+}, {
+    value: 'JP',
+    label: 'Japan',
+}, {
+    value: 'RS',
+    label: 'Russia',
 }]
 
 export default {
     get: (_: string, config: { params: any }) => 
-    new Promise<{data: any}>(resolve => {
+        new Promise(resolve => {
+            setTimeout(() => {
+                resolve({
+                    data: countriesList.filter(
+                        ({ label }) => config.params.term ?
+                            label.toUpperCase().includes(config.params.term.toUpperCase()) :
+                            true
+                    ),
+                })
+            }, 300)
+        }),
+    post: (_: string, config: { params: any }) => 
+    new Promise(resolve => {
         setTimeout(() => {
+            countriesList = [
+                {
+                    value: config.params.term,
+                    label: config.params.term,
+                },
+                ...countriesList
+            ]
             resolve({
-                data: countriesList.filter(
-                    ({ label }) => config.params.term ?
-                        label.toUpperCase().startsWith(config.params.term.toUpperCase()) :
-                        true
-                )
+                data: countriesList,
+                success: true,
             })
         }, 300)
     })
