@@ -28,3 +28,9 @@ npm run start
 or 
 yarn start
 ```
+- to create an optimized build
+```bash
+npm run build
+or 
+yarn build
+```
