@@ -16,8 +16,15 @@ https://github.com/aquibmomin007/smart_dropdown
 ```
 
 ## 1. Setup
+- install all dependencies
 ```bash
 npm install
 or 
 yarn install
+```
+- to run the project in development mode
+```bash
+npm run start
+or 
+yarn start
 ```
