@@ -1,7 +1,7 @@
 import React, {  } from 'react';
 import styles from './SearchBlock.module.scss'
 
-type SearchBlockProps = {
+export type SearchBlockProps = {
   searchTerm: string;
   hasAddPermission: boolean;
   handleAddNewOption: () => void;
@@ -20,9 +20,9 @@ const SearchBlock = ({ searchTerm, hasAddPermission, handleAddNewOption, handleS
       onChange={handleSearchChange} 
     />
     {showSearchAddBlock() && (
-      <div className={styles.searchBlock}>
+      <div className={styles.searchBlock} data-testid="add-block-test">
         <p className={styles.searchBlockText}>{`"${searchTerm}" not found`}</p>
-        {hasAddPermission && <button className={styles.searchBlockBtn} onClick={handleAddNewOption}>Add &amp; Select</button>}
+        {hasAddPermission && <button  className={styles.searchBlockBtn} onClick={handleAddNewOption}>Add &amp; Select</button>}
       </div>
     )}
     </>

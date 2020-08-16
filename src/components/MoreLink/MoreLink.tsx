@@ -1,12 +1,13 @@
 import React, {  } from 'react';
-import styles from './MoreLink.module.scss'
+import styles from './MoreLink.module.scss';
 
-type MoreLinkProps = {
+export type MoreLinkProps = {
   moreValue: number;
   handleSetAllCountries: () => void;
 }
 
-const MoreLink = ({ moreValue, handleSetAllCountries }: MoreLinkProps) => { 
+const MoreLink = (props: MoreLinkProps) => { 
+  const { moreValue, handleSetAllCountries } = props;
   return (
     <p 
         className={styles.dropdownMoreList} 

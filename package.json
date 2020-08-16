@@ -1,17 +1,20 @@
 {
-  "name": "react-app-boilerplate",
+  "name": "smart_dropDown",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^10.4.8",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.159",
     "@types/node": "^12.12.54",
     "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "classnames": "^2.2.6",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -22,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts  test --watchAll --env=jest-environment-jsdom-sixteen --verbose",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -36,6 +39,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*/.{ts,tsx}"
+    ],
+    "coverageReporters": [
+      "cobertura",
+      "html"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10"

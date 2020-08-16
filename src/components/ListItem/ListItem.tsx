@@ -1,17 +1,18 @@
 import React, {  } from 'react';
 import cx from 'classnames';
 import styles from './ListItem.module.scss'
-import { CountryOption } from '../../hooks/useCountriesList';
+import { SelectOption } from '../../hooks/useCountriesList';
 
-type ListItemProps = {
-    selectedOption: CountryOption | null;
-    country: CountryOption,
-    handleSelectChange: (country: CountryOption) => () => void
+export type ListItemProps = {
+    selectedOption: SelectOption | null;
+    country: SelectOption,
+    handleSelectChange: (country: SelectOption) => () => void
 }
 
 const ListItem = ({ selectedOption, country, handleSelectChange }: ListItemProps) => { 
   return (
     <li
+        data-testid="list-item-test"
         className={cx(styles.dropdownListItem, {
             [styles.activeListItem]: selectedOption && selectedOption.value === country.value
         })}

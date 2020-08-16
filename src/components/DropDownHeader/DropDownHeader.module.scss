@@ -7,6 +7,10 @@
     position: relative;
     text-align: left;
     overflow: hidden;
+
+    &:hover .dropdownClearBtn{
+        display: inline;
+    }
 }
 
 .dropdownPlaceholder {
@@ -20,4 +24,18 @@
     top: 1px;
     background: white;
     padding: 10px;
+}
+
+.dropdownLabel{
+    font-size: 12px;
+    text-align: left;
+    margin: 10px 0 5px;
+}
+
+.dropdownClearBtn{
+    position: absolute;
+    right: 35px;
+    top: 11px;
+    display: none;
+    background: white;
 }

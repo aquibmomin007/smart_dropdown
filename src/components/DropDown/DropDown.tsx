@@ -1,51 +1,76 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styles from './DropDown.module.scss'
-import { useCountriesList, CountryOption } from '../../hooks/useCountriesList';
+import { useCountriesList, SelectOption } from '../../hooks/useCountriesList';
 import { getMoreLinkHelper } from '../../helpers/getMoreLinkHelper';
 import MoreLink from '../MoreLink/MoreLink';
 import ListItem from '../ListItem/ListItem';
 import SearchBlock from '../SearchBlock/SearchBlock';
 import DropDownHeader from '../DropDownHeader/DropDownHeader';
+import debounce from 'lodash/debounce';
 
 type DropDownProps = {
-  maxOptionsToShow: number
-  hasAddPermission: boolean
+  maxOptionsToShow: number;
+  hasAddPermission: boolean;
+  options: SelectOption[];
+  label?: string;
 }
 
-const DropDown = ({ maxOptionsToShow, hasAddPermission }: DropDownProps) => { 
+const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDownProps) => { 
   const [showOptions, setShowOptions] = useState(false);
   const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
   const [searchTerm, setSearchTerm] = useState("")
-  const handleSearchChange = useCallback((event) => setSearchTerm(event.target.value), [setSearchTerm])
+  const [countries, setCountries] = useState(options);
 
-  const { countries, addCountry } = useCountriesList(searchTerm)
+  const { addCountry, getCountries } = useCountriesList(searchTerm)
 
   const [maxValues, setMaxValues] = useState(maxOptionsToShow);
   const handleSetAllCountries = useCallback(() => setMaxValues(countries.length), [setMaxValues, countries]);
 
-  const [selectedOption, setSelectedOption] = useState<CountryOption | null>(null)
-  const handleSelectChange = useCallback((country: CountryOption) => () => {
+  const [selectedOption, setSelectedOption] = useState<SelectOption | null>(null)
+  const handleClearSelectedOption = useCallback((event:MouseEvent) => {
+    event.stopPropagation();
+    setSelectedOption(null)
+  }, [setSelectedOption]);
+
+  const fetchCountries = useCallback((term: string) => {
+    console.log("called for :: ", term)
+    getCountries(term).then(result => setCountries(result.data))
+  }, [getCountries, setCountries])
+
+  const debouncedFetchCountries = debounce((value: string) => fetchCountries(value), 1000);
+
+  const handleSelectChange = useCallback((country: SelectOption) => () => {
     setSelectedOption(country);
     setShowOptions(false);
     setSearchTerm("")
-  }, [setSelectedOption, setShowOptions]);
+    fetchCountries('')
+  }, [setSelectedOption, setShowOptions, fetchCountries]);
 
+  const handleSearchChange = useCallback((event) => {
+    setSearchTerm(event.target.value)
+    debouncedFetchCountries(event.target.value)
+  }, [setSearchTerm, debouncedFetchCountries]);
+  
   const handleAddNewOption = useCallback(() => {
     addCountry(searchTerm)
       .then(result => {
-        const updatedCountries = result.data as CountryOption[]
+        const updatedCountries = result.data as SelectOption[]
         setSelectedOption(updatedCountries.find(c => c.label === searchTerm) || null)
         setShowOptions(false)
         setSearchTerm("")
+        setCountries(updatedCountries);
         if (maxValues !== maxOptionsToShow) setMaxValues(updatedCountries.length)
       })
-  }, [searchTerm, addCountry, maxValues, maxOptionsToShow])
+  }, [searchTerm,setCountries, addCountry, maxValues, maxOptionsToShow])
 
   const showSearchAddBlock = useCallback(() => {
     return (searchTerm.length > 0) && (countries.length < 1)
   }, [searchTerm, countries]);
 
+  useEffect(() => {
+    setCountries(options);
+  }, [options]);
 
   //clickoutside function
   const ref = useRef<HTMLDivElement>(null)
@@ -66,6 +91,8 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission }: DropDownProps) => {
         showOptions={showOptions}
         selectedOption={selectedOption}
         toggleExpand={toggleExpand}
+        handleClearSelectedOption={handleClearSelectedOption}
+        label={label}
       />
       {showOptions && (
         <div className={styles.dropdownListWrapper}>
@@ -91,7 +118,7 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission }: DropDownProps) => {
             }
           </ul>
           {getMoreLinkHelper(countries.length, maxValues) > 0 && (
-            <MoreLink moreValue={getMoreLinkHelper(countries.length, maxValues)} handleSetAllCountries={handleSetAllCountries}/>
+            <MoreLink moreValue={getMoreLinkHelper(countries.length, maxValues)} handleSetAllCountries={handleSetAllCountries} />
           )}
         </div>
       )}

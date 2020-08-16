@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoreLink Testing renders correctly 1`] = `
+<p
+  class="dropdownMoreList"
+>
+  5 more...
+</p>
+`;

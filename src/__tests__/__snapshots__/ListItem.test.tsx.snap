@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem Testing renders correctly for Item is selected 1`] = `
+<div>
+  <li
+    class="dropdownListItem activeListItem"
+    data-testid="list-item-test"
+  >
+    Singapore
+  </li>
+</div>
+`;
+
+exports[`ListItem Testing renders correctly for nothing is selected 1`] = `
+<div>
+  <li
+    class="dropdownListItem"
+    data-testid="list-item-test"
+  >
+    Singapore
+  </li>
+</div>
+`;

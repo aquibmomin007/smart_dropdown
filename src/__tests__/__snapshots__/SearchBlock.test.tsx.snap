@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBlock Testing renders correctly and Add Button is not shown 1`] = `
+<div>
+  <input
+    class="dropdownSearchInput"
+    placeholder="Search..."
+    type="text"
+    value=""
+  />
+  <div
+    class="searchBlock"
+    data-testid="add-block-test"
+  >
+    <p
+      class="searchBlockText"
+    >
+      "" not found
+    </p>
+  </div>
+</div>
+`;
+
+exports[`SearchBlock Testing renders correctly and Add Button is shown 1`] = `
+<div>
+  <input
+    class="dropdownSearchInput"
+    placeholder="Search..."
+    type="text"
+    value=""
+  />
+  <div
+    class="searchBlock"
+    data-testid="add-block-test"
+  >
+    <p
+      class="searchBlockText"
+    >
+      "" not found
+    </p>
+    <button
+      class="searchBlockBtn"
+    >
+      Add & Select
+    </button>
+  </div>
+</div>
+`;
