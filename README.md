@@ -34,3 +34,22 @@ npm run build
 or 
 yarn build
 ```
+
+## 2. Usage
+- Example
+```jsx
+<DropDown 
+  maxOptionsToShow={5}
+  hasAddPermission={true}
+  options={countries}
+  label="Country List (Add New Permission)"
+/>
+```
+
+## 3. Props
+| Propert Name     | Description                                                                 | Required | Type                                             | Example                                                                      |
+|------------------|-----------------------------------------------------------------------------|----------|--------------------------------------------------|------------------------------------------------------------------------------|
+| maxOptionsToShow | This shows the number of options to show in the dropdown list when expanded | Yes      | number                                           | maxOptionsToShow={5}                                                         |
+| hasAddPermission | This gives permission to add new option to the dropdown list                | Yes      | boolean                                          | hasAddPermission={true}                                                      |
+| options          | This is array of key-value pair to display the dropdown options             | Yes      | [  {    label:string;    value:string  },  ... ] | options={   [    {      label:'Singapore';      value:'SG'    },   ...   ] } |
+| label            | This property adds a label above your select box                            | No       | string                                           | label="countries"                                                            |                                                       |
