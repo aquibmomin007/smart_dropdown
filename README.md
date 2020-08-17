@@ -9,6 +9,7 @@ https://github.com/facebook/create-react-app
 * Typescript support added
 * SCSS is used for styling
 * React Icons are used
+* node version >= 12.0.0
 
 
 ```bash
@@ -22,7 +23,7 @@ npm install
 or 
 yarn install
 ```
-- to run the project in development mode
+- to start the project locally
 ```bash
 npm run start
 or 
@@ -34,15 +35,40 @@ npm run build
 or 
 yarn build
 ```
+- to run unit tests) 
+```bash
+npm run test
+or 
+yarn test
+```
 
 ## 2. Usage
-- Example
+- Example 1 (Country List (Add New Permission) + label)
 ```jsx
 <DropDown 
   maxOptionsToShow={5}
   hasAddPermission={true}
   options={countries}
   label="Country List (Add New Permission)"
+/>
+```
+
+- Example 2 (Country List (Cannot Add New) + label)
+```jsx
+<DropDown
+  maxOptionsToShow={5}
+  hasAddPermission={false}
+  options={[...countries]}
+  label="Country List (Add New Permission)"
+/>
+```
+
+- Example 3 (No Label)
+```jsx
+<DropDown
+  maxOptionsToShow={5}
+  hasAddPermission={true}
+  options={[...countries]}
 />
 ```
 
