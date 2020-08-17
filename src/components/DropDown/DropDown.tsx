@@ -6,6 +6,7 @@ import MoreLink from '../MoreLink/MoreLink';
 import ListItem from '../ListItem/ListItem';
 import SearchBlock from '../SearchBlock/SearchBlock';
 import DropDownHeader from '../DropDownHeader/DropDownHeader';
+import debounce from 'lodash/debounce';
 
 type DropDownProps = {
   maxOptionsToShow: number;
@@ -19,6 +20,7 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
   const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
   const [searchTerm, setSearchTerm] = useState("")
+  // const [countries, setCountries] = useState(options);
 
   const { countries, addCountry, isLoading } = useCountriesList(searchTerm)
 
@@ -31,14 +33,24 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
     setSelectedOption(null)
   }, [setSelectedOption]);
 
-  
+  // const fetchCountries = useCallback(
+  //   (term: string) => getCountries(term).then(result => setCountries(result.data)),
+  //   [getCountries, setCountries]
+  // )
+
+  // const debouncedFetchCountries = useCallback(debounce((value: string) => fetchCountries(value), 1000), []);
+
   const handleSelectChange = useCallback((country: SelectOption) => () => {
     setSelectedOption(country);
     setShowOptions(false);
     setSearchTerm("")
+    // fetchCountries('')
   }, [setSelectedOption, setShowOptions, ]);
 
-  const handleSearchChange = useCallback((event) => setSearchTerm(event.target.value), [setSearchTerm, ]);
+  const handleSearchChange = useCallback((event) => {
+    setSearchTerm(event.target.value)
+    // debouncedFetchCountries(event.target.value)
+  }, [setSearchTerm, ]);
   
   const handleAddNewOption = useCallback(() => {
     addCountry(searchTerm)
@@ -47,16 +59,20 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
         setSelectedOption(updatedCountries.find(c => c.label === searchTerm) || null)
         setShowOptions(false)
         setSearchTerm("")
+        // setCountries(updatedCountries);
         if (maxValues !== maxOptionsToShow) setMaxValues(updatedCountries.length)
       })
   }, [searchTerm, addCountry, maxValues, maxOptionsToShow])
 
-  const showSearchAddBlock = useCallback(
-    () => (searchTerm.length > 0) && (countries.length < 1), 
-    [searchTerm, countries]
-  );
+  const showSearchAddBlock = useCallback(() => {
+    return (searchTerm.length > 0) && (countries.length < 1)
+  }, [searchTerm, countries]);
 
-  //handling clickoutside behavior
+  useEffect(() => {
+    // setCountries(options);
+  }, [options]);
+
+  //clickoutside function
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
