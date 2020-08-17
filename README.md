@@ -35,7 +35,7 @@ npm run build
 or 
 yarn build
 ```
-- to run unit tests) 
+- to run unit tests
 ```bash
 npm run test
 or 
@@ -79,3 +79,5 @@ yarn test
 | hasAddPermission | This gives permission to add new option to the dropdown list                | Yes      | boolean                                          | hasAddPermission={true}                                                      |
 | options          | This is array of key-value pair to display the dropdown options             | Yes      | [  {    label:string;    value:string  },  ... ] | options={   [    {      label:'Singapore';      value:'SG'    },   ...   ] } |
 | label            | This property adds a label above your select box                            | No       | string                                           | label="countries"                                                            |                                                       |
+
+> **_NOTE:_**  More enhancements to be added as well as unit tests.
