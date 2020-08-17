@@ -25,13 +25,7 @@ export const useCountriesList =  (term: string) => {
   const addCountry = (country: string) =>
     axios.post(baseUrl + "/countries", { params: { term: country } }) as Promise<CreateCountriesResponse>
 
-  // const getCountries = async (term: string) => {
-  //   console.log("get countries")
-  //   return await axios.get(baseUrl + "/countries", { params: { term: term } }) as Promise<CreateCountriesResponse>
-  // }
-
   const fetchCountries = async (term: string) => {
-    console.log("fetch countries")
     setError(null);
     setIsLoading(true);
 
@@ -41,7 +35,6 @@ export const useCountriesList =  (term: string) => {
     } catch (error) {
       setError(error);
     }
-
     setIsLoading(false);
   };
 
@@ -49,7 +42,7 @@ export const useCountriesList =  (term: string) => {
   
   useEffect(() => {
     debouncedFetchCountries(term)
-  }, [term]);
+  }, [term, debouncedFetchCountries]);
   
   return { countries, addCountry, isLoading, error };
 }
