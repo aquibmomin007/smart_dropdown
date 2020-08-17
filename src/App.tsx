@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 import styles from './App.module.scss';
 import Examples from './components/examples'
 
@@ -34,6 +34,7 @@ const App = () => {
               )}
             </Switch>
           </div>
+          <Redirect from="/" to="/example-1" />
         </BrowserRouter>
         </ul>
       </div>

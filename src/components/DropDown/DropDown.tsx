@@ -20,9 +20,9 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
   const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
   const [searchTerm, setSearchTerm] = useState("")
-  // const [countries, setCountries] = useState(options);
+  const [countries, setCountries] = useState(options);
 
-  const { countries, addCountry, isLoading } = useCountriesList(searchTerm)
+  const { getCountries, addCountry, isLoading } = useCountriesList(searchTerm)
 
   const [maxValues, setMaxValues] = useState(maxOptionsToShow);
   const handleSetAllCountries = useCallback(() => setMaxValues(countries.length), [setMaxValues, countries]);
@@ -33,24 +33,24 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
     setSelectedOption(null)
   }, [setSelectedOption]);
 
-  // const fetchCountries = useCallback(
-  //   (term: string) => getCountries(term).then(result => setCountries(result.data)),
-  //   [getCountries, setCountries]
-  // )
+  const fetchCountries = useCallback(
+    (term: string) => getCountries(term).then(result => setCountries(result.data)),
+    [getCountries, setCountries]
+  )
 
-  // const debouncedFetchCountries = useCallback(debounce((value: string) => fetchCountries(value), 1000), []);
+  const debouncedFetchCountries = useCallback(debounce((value: string) => fetchCountries(value), 300), []);
 
   const handleSelectChange = useCallback((country: SelectOption) => () => {
     setSelectedOption(country);
     setShowOptions(false);
     setSearchTerm("")
-    // fetchCountries('')
-  }, [setSelectedOption, setShowOptions, ]);
+    fetchCountries('')
+  }, [setSelectedOption, setShowOptions, fetchCountries]);
 
   const handleSearchChange = useCallback((event) => {
     setSearchTerm(event.target.value)
-    // debouncedFetchCountries(event.target.value)
-  }, [setSearchTerm, ]);
+    debouncedFetchCountries(event.target.value)
+  }, [setSearchTerm, debouncedFetchCountries]);
   
   const handleAddNewOption = useCallback(() => {
     addCountry(searchTerm)
@@ -59,7 +59,7 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
         setSelectedOption(updatedCountries.find(c => c.label === searchTerm) || null)
         setShowOptions(false)
         setSearchTerm("")
-        // setCountries(updatedCountries);
+        setCountries(updatedCountries);
         if (maxValues !== maxOptionsToShow) setMaxValues(updatedCountries.length)
       })
   }, [searchTerm, addCountry, maxValues, maxOptionsToShow])
@@ -69,10 +69,10 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
   }, [searchTerm, countries]);
 
   useEffect(() => {
-    // setCountries(options);
+    setCountries(options);
   }, [options]);
 
-  //clickoutside function
+  //handle outside click
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
