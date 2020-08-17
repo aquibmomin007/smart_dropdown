@@ -1,44 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import cx from 'classnames';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import styles from './App.module.scss';
-import DropDown from './components/DropDown/DropDown';
-import { useCountriesList } from './hooks/useCountriesList';
+import Examples from './components/examples'
 
 const App = () => {
-  const { countries } = useCountriesList("");
-  
+  const [activeTab, setActiveTab] = useState(0)
   return (
     <div className={styles.root}>
       <h2>Examples</h2>
       <div className={styles.mainWrapper}>
-        <div className={styles.mainContainer}>
-          <p>Country List (Add New Permission) + label</p>
-          <DropDown 
-            maxOptionsToShow={5}
-            hasAddPermission={true}
-            options={countries}
-            label="Country List (Add New Permission)"
-          />
-        </div>
-        <div className={styles.mainContainer}>
-          <p>Country List (Cannot Add New) + label</p>
-          <DropDown 
-            maxOptionsToShow={5}
-            hasAddPermission={false}
-            options={countries}
-            label="Country List (Cannot Add New)"
-          />
-        </div>
-        <div className={styles.mainContainer}>
-          <p>No label</p>
-          <DropDown 
-            maxOptionsToShow={5}
-            hasAddPermission={true}
-            options={countries}
-          />
-        </div>
+        <ul className={styles.exampleListContainer}>
+        <BrowserRouter>
+          <div className={styles.linksWrapper}>
+            {Examples.map(
+                (_, i) => (
+                  <div className={styles.links} key={i}>
+                    <Link
+                      onClick={() => setActiveTab(i)}
+                      to={`/example-${i+1}`}
+                      className={cx(styles.links, { [styles.activeLink]: activeTab === i })}
+                    >
+                      Example {i+1}
+                    </Link>
+                  </div>
+                )
+              )}
+          </div>
+          <div className="tabs">
+            <Switch>
+              {Examples.map(
+                (Example, i) => <Route key={i} path={`/example-${i+1}`} exact component={Example} />
+              )}
+            </Switch>
+          </div>
+        </BrowserRouter>
+        </ul>
       </div>
     </div>
-  );
+  )
 }
 
 export default App;

@@ -20,9 +20,9 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
   const toggleExpand = useCallback(() => setShowOptions(!showOptions), [setShowOptions, showOptions]);
 
   const [searchTerm, setSearchTerm] = useState("")
-  const [countries, setCountries] = useState(options);
+  // const [countries, setCountries] = useState(options);
 
-  const { addCountry, getCountries } = useCountriesList(searchTerm)
+  const { countries, addCountry, isLoading } = useCountriesList(searchTerm)
 
   const [maxValues, setMaxValues] = useState(maxOptionsToShow);
   const handleSetAllCountries = useCallback(() => setMaxValues(countries.length), [setMaxValues, countries]);
@@ -33,24 +33,24 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
     setSelectedOption(null)
   }, [setSelectedOption]);
 
-  const fetchCountries = useCallback((term: string) => {
-    console.log("called for :: ", term)
-    getCountries(term).then(result => setCountries(result.data))
-  }, [getCountries, setCountries])
+  // const fetchCountries = useCallback(
+  //   (term: string) => getCountries(term).then(result => setCountries(result.data)),
+  //   [getCountries, setCountries]
+  // )
 
-  const debouncedFetchCountries = debounce((value: string) => fetchCountries(value), 1000);
+  // const debouncedFetchCountries = useCallback(debounce((value: string) => fetchCountries(value), 1000), []);
 
   const handleSelectChange = useCallback((country: SelectOption) => () => {
     setSelectedOption(country);
     setShowOptions(false);
     setSearchTerm("")
-    fetchCountries('')
-  }, [setSelectedOption, setShowOptions, fetchCountries]);
+    // fetchCountries('')
+  }, [setSelectedOption, setShowOptions, ]);
 
   const handleSearchChange = useCallback((event) => {
     setSearchTerm(event.target.value)
-    debouncedFetchCountries(event.target.value)
-  }, [setSearchTerm, debouncedFetchCountries]);
+    // debouncedFetchCountries(event.target.value)
+  }, [setSearchTerm, ]);
   
   const handleAddNewOption = useCallback(() => {
     addCountry(searchTerm)
@@ -59,17 +59,17 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
         setSelectedOption(updatedCountries.find(c => c.label === searchTerm) || null)
         setShowOptions(false)
         setSearchTerm("")
-        setCountries(updatedCountries);
+        // setCountries(updatedCountries);
         if (maxValues !== maxOptionsToShow) setMaxValues(updatedCountries.length)
       })
-  }, [searchTerm,setCountries, addCountry, maxValues, maxOptionsToShow])
+  }, [searchTerm, addCountry, maxValues, maxOptionsToShow])
 
   const showSearchAddBlock = useCallback(() => {
     return (searchTerm.length > 0) && (countries.length < 1)
   }, [searchTerm, countries]);
 
   useEffect(() => {
-    setCountries(options);
+    // setCountries(options);
   }, [options]);
 
   //clickoutside function
@@ -102,6 +102,7 @@ const DropDown = ({ maxOptionsToShow, hasAddPermission, options, label }: DropDo
             handleAddNewOption={handleAddNewOption}
             handleSearchChange={handleSearchChange}
             showSearchAddBlock={showSearchAddBlock}
+            isLoading={isLoading}
           />
           <ul className={styles.dropdownListContainer}>
             {countries
