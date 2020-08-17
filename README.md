@@ -35,7 +35,7 @@ npm run build
 or 
 yarn build
 ```
-- to run unit tests
+- to run unit tests (using react-testing-library)
 ```bash
 npm run test
 or 
